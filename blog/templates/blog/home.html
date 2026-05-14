@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}  ← must be line 1, no whitespace before it
+ 
+{% block title %}Home — My Blog{% endblock %}
+ 
+{% block content %}
+ 
+  <h1>Welcome to My Blog</h1>
+  <p style="color: #666; margin: 0.5rem 0 2rem;">Latest posts</p>
+ 
+  {% for post in posts %}
+    <div style="border: 1px solid #eee; border-radius: 8px;
+            padding: 1.25rem; margin-bottom: 1rem;">
+      <span style="font-size: 0.75rem; background: #E1F5EE;
+             color: #0F6E56; padding: 2px 8px; border-radius: 20px;">
+        {{ post.category }}
+      </span>
+      <h2 style="margin: 0.5rem 0 0.25rem; font-size: 1.1rem;">
+        {{ post.title }}
+      </h2>
+      <p style="color: #555; line-height: 1.6;">{{ post.excerpt }}</p>
+      <p style="font-size: 0.8rem; color: #999; margin-top: 0.75rem;">
+        {{ post.date }} — {{ post.author }}
+      </p>
+    </div>
+  {% empty %}  ← renders this if posts list is empty
+    <p>No posts yet.</p>
+  {% endfor %}
+ 
+{% endblock %}
