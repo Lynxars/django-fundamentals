@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <h1>Create a New Blog Post</h1>
+
+  <form method="POST" class="my-4">
+    <!-- Django's mandatory security token to prevent form spoofing -->
+    {% csrf_token %}
+
+    <!-- Render form fields inside structural paragraph HTML tags -->
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success">Save Post</button>
+  </form>
+
+  <a href="{% url 'blog:home' %}">Cancel</a>
+{% endblock %}

@@ -11,5 +11,7 @@
   <p style="font-size:.85rem;color:#888;margin-bottom:2rem;">
     {{ post.created_at|date:"N j, Y" }} — {{ post.author }}
   </p>
+  <!-- Add this edit link -->
+  <a href="{% url 'blog:update_post' slug=post.slug %}">Edit Post</a>
   <div style="line-height:1.8;color:#333;">{{ post.body }}</div>
 {% endblock %}
