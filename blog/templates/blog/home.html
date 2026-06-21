@@ -14,12 +14,12 @@
              color: #0F6E56; padding: 2px 8px; border-radius: 20px;">
         {{ post.category }}
       </span>
-      <h2 style="margin: 0.5rem 0 0.25rem; font-size: 1.1rem;">
-        {{ post.title }}
-      </h2>
+      <a href="{% url 'blog:post_detail' post.slug %}" style="text-decoration:none;color:inherit;">
+        <h2>{{ post.title }}</h2>
+      </a>
       <p style="color: #555; line-height: 1.6;">{{ post.excerpt }}</p>
       <p style="font-size: 0.8rem; color: #999; margin-top: 0.75rem;">
-        {{ post.date }} — {{ post.author }}
+        {{ post.created_at|date:"N j, Y" }} – {{ post.author }}
       </p>
     </div>
   {% empty %}  ← renders this if posts list is empty
