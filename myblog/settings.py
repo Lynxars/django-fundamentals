@@ -116,3 +116,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# mysite/settings.py
+
+# The URL prefix used when accessing static files in the browser
+STATIC_URL = 'static/'
+
+# Additional locations where Django will look for static files [5]
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
