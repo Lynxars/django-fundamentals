@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+  <div class="alert alert-danger my-4" role="alert">
+    <h4 class="alert-heading">Warning: Permanent Action!</h4>
+    <p>Are you absolutely sure you want to delete "<strong>{{ post.title }}</strong>"? This action cannot be undone and will remove the post from our database permanently.</p>
+    <hr>
+
+    <form method="POST" class="d-inline">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, Delete Permanently</button>
+    </form>
+
+    <!-- Cancel button styled cleanly -->
+    <a href="{% url 'blog:post_detail' slug=post.slug %}" class="btn btn-secondary">Cancel and Go Back</a>
+  </div>
+{% endblock %}

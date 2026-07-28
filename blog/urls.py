@@ -10,5 +10,7 @@ urlpatterns = [
     path('post/<slug:slug>/', views.post_detail, name='post_detail'),
     # Add the edit route 
     path('post/<slug:slug>/edit/', views.update_post, name='update_post'),
-    
+     # --- ADD THIS ROUTE ---
+    path('post/<slug:slug>/delete/', views.delete_post, name='delete_post'),
+        
 ]

@@ -1,17 +1,16 @@
-<!-- blog/templates/blog/post_detail.html -->
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ post.title }} — My Blog{% endblock %}
-
 {% block content %}
-  <span style="font-size:.75rem;background:#E1F5EE;color:#0F6E56;padding:2px 8px;border-radius:20px;">
-    {{ post.category }}
-  </span>
-  <h1 style="margin: .75rem 0 .25rem;">{{ post.title }}</h1>
-  <p style="font-size:.85rem;color:#888;margin-bottom:2rem;">
-    {{ post.created_at|date:"N j, Y" }} — {{ post.author }}
-  </p>
-  <!-- Add this edit link -->
-  <a href="{% url 'blog:update_post' slug=post.slug %}">Edit Post</a>
-  <div style="line-height:1.8;color:#333;">{{ post.body }}</div>
+  <h1>{{ post.title }}</h1>
+  <p class="text-muted">By {{ post.author }} in {{ post.category }} on {{ post.created_at|date:"F d, Y" }}</p>
+
+  <div class="mb-3">
+    <a href="{% url 'blog:update_post' slug=post.slug %}" class="btn btn-warning btn-sm">Edit Post</a>
+    <!-- Add the delete button next to the edit button -->
+    <a href="{% url 'blog:delete_post' slug=post.slug %}" class="btn btn-danger btn-sm">Delete Post</a>
+  </div>
+
+  <hr>
+  <p>{{ post.body }}</p>
+  <a href="{% url 'blog:home' %}" class="btn btn-secondary btn-sm">Back to Home</a>
 {% endblock %}

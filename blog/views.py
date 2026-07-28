@@ -117,3 +117,13 @@ def update_post(request, slug):
         'post': post
     }
     return render(request, 'blog/post_form.html', context)
+
+def delete_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)  # find the post
+
+    if request.method == 'POST':    # user confirmed deletion
+        post.delete()               # remove from database
+        return redirect('blog:home')
+
+    # GET request — just show confirmation page
+    return render(request, 'blog/post_confirm_delete.html', {'post': post})
