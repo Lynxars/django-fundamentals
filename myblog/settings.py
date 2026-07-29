@@ -126,3 +126,11 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# mysite/settings.py
+
+# Where to redirect users after logging in [1.2.7]
+LOGIN_REDIRECT_URL = 'blog:home'
+
+# Where to redirect users after logging out [1.2.7]
+LOGOUT_REDIRECT_URL = 'blog:home'

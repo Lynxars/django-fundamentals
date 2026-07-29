@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404 
-from blog.models import Post 
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required 
+from blog.models import Post
+from blog.forms import PostForm 
  
 # Hardcoded data 
 posts = [
@@ -30,12 +32,11 @@ posts = [
 def home(request):
     context = {'posts': posts}
     return render(request, 'blog/home.html', context)
- 
- 
+
 def about(request):
     return render(request, 'blog/about.html')
- 
- 
+
+
 def post_detail(request, pk):
     context = {'pk': pk}
     return render(request, 'blog/post_detail.html', context)
@@ -53,7 +54,6 @@ def post_detail(request, pk):
 
         # blog/views.py
 
- 
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -65,21 +65,24 @@ def home(request):
     return render(request, 'blog/home.html', {'posts': posts,})
 
 
-# blog/views.py
-from django.shortcuts import render, redirect  # Make sure redirect is imported!
-from blog.forms import PostForm                # Import your new form class!
 
+
+@login_required
 def create_post(request):
-    # Check if the request is a POST (user submitted data) 
+    # Check if the request is a POST (user submitted data)
     if request.method == 'POST':
-        # Pass the incoming POST data to our form class 
+        # Pass the incoming POST data to our form class
         form = PostForm(request.POST)
 
         # Check if the form meets all model field requirements
         if form.is_valid():
-            # Save the record to the SQLite database 
-            form.save()
-            # Redirect the user back to the blog home page 
+            # Create a post object in memory, but don't save to the DB yet
+            post = form.save(commit=False)
+            # Inject the logged-in user's username into the author field
+            post.author = request.user.username
+            # Save the completed post object to the database
+            post.save()
+            # Redirect the user back to the blog home page
             return redirect('blog:home')
 
     else:
@@ -91,13 +94,7 @@ def create_post(request):
     }
     return render(request, 'blog/post_form.html', context)
 
-# blog/views.py
-from django.shortcuts import render, redirect, get_object_or_404
-from blog.models import Post
-from blog.forms import PostForm
-
-# Existing create_post view remains the same...
-
+@login_required
 def update_post(request, slug):
     # 1. Fetch the specific post we want to edit 
     post = get_object_or_404(Post, slug=slug)
@@ -118,6 +115,7 @@ def update_post(request, slug):
     }
     return render(request, 'blog/post_form.html', context)
 
+@login_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)  # find the post
 
